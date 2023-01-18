@@ -12,7 +12,7 @@ public class TriggerGoal : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ball"))
         {
-            Debug.Log("You Won!");
+            Debug.Log("Checkpoint reached!");
         }
     }
 }
