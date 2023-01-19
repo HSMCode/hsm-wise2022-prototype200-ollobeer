@@ -6,6 +6,13 @@ TagManager:
   tags:
   - Ball
   - Ground
+  - Wall
+  - Goal1
+  - Goal2
+  - Goal3
+  - Goal4
+  - Goal5
+  - GoalStart
   layers:
   - Default
   - TransparentFX
