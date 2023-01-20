@@ -44,7 +44,7 @@ public class Countdown : MonoBehaviour
 
         //sets the time
         currentTime = startingTime;
-        round = 0;
+        round = -1;
         
         //sets the screen
         _inGameUI.SetActive(true);

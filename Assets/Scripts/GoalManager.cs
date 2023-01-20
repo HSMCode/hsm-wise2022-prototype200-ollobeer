@@ -9,7 +9,7 @@ public class GoalManager : MonoBehaviour
 
     private bool onTheWayBack; //is he on the way back?
 
-    private Countdown countdown;
+    private Countdown countdown; //script to update Checkpoints on UI
 
     private int checkpointNumber;
 
