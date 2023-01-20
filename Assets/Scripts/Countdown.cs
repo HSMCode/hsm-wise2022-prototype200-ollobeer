@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class Countdown : MonoBehaviour
 {
 
@@ -24,6 +25,8 @@ public class Countdown : MonoBehaviour
 
     public int round = 0;
 
+    private Text gameOverRoundUI;
+
     //Variables Checkpoint Counter
     private Text checkpointUI;
     private string checkpointText1 = "Checkpoint: ";
@@ -31,37 +34,49 @@ public class Countdown : MonoBehaviour
 
     void Start()
     {
+        //gest all components
         _inGameUI = GameObject.Find("InGame");
         _gameOverUI = GameObject.Find("GameOver");
 
         roundUI = GameObject.Find("RoundScore").GetComponent<Text>();
+        gameOverRoundUI = GameObject.Find("Rounds").GetComponent<Text>();
         checkpointUI = GameObject.Find("Checkpoint").GetComponent<Text>();
 
+        //sets the time
         currentTime = startingTime;
         round = 0;
-
+        
+        //sets the screen
         _inGameUI.SetActive(true);
         _gameOverUI.SetActive(false);
     }
    
     void Update()
     {
+        //reduces the time by one second each second
         currentTime -= 1 * Time.deltaTime;
         countdownText.text = ("TIME: ") + currentTime.ToString ("0");
 
-        if(currentTime <= 0) 
+        if(currentTime <= 0) //if the time runs out 
         {
             currentTime = 0;
+
+            gameOverRoundUI.text = roundText + round;
+
+            // sets the game of screen
+            _inGameUI.SetActive(false);
+            _gameOverUI.SetActive(true);
         }
     }
 
-    public void newTimer()
+    public void newTimer() //resets the Timer with a reduced Time
     {
         round++;
         roundUI.text = roundText + round.ToString();
         currentTime = startingTime - round * timeReduction;
     }
 
+    //sets a new Checkpoint
     public void newCheckpoint(int checkpointNumber) {
         checkpointUI.text = checkpointText1 + checkpointNumber.ToString() + checkpointText2;
     }
