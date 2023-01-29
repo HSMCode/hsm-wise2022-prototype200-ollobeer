@@ -13,13 +13,18 @@ public class GoalManager : MonoBehaviour
 
     private int _checkpointNumber;
 
+    //Sound Effects
+    public AudioSource reachedSoundSFX;
+    private AudioSource _completeRoundSFX;
+
     // Start is called before the first frame update
     void Start()
     {
         _countdown = GameObject.Find("Canvas").GetComponent<Countdown>(); //finds GoalManager Script
         _onTheWayBack = false; //at the beginning the player isnt on the way back
         _checkpointNumber = 0; //sets the checkpoint to zero
-        
+        reachedSoundSFX = GetComponent<AudioSource>();
+        _completeRoundSFX =GameObject.Find("Woohoo").GetComponent<AudioSource>(); //sposored by Agnes Sound Effect
     }
 
     // Update is called once per frame
@@ -33,6 +38,7 @@ public class GoalManager : MonoBehaviour
     {
         if(goalNumber == _nextGoal) //if the right checkpoint is reached
         {
+            reachedSoundSFX.Play(0);
             if(_nextGoal == 5) //if the end of the parkour is reached 
             {
                 _nextGoal--; //next goal is behind
@@ -43,6 +49,8 @@ public class GoalManager : MonoBehaviour
 
             }else if (_nextGoal == 0) //if the beginning of the parkour is reached
             {
+                _completeRoundSFX.Play(0);
+
                 _nextGoal++;
                 _onTheWayBack = false; //not anymore on the way back
 
