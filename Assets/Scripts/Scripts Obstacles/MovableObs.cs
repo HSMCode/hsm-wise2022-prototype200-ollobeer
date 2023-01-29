@@ -9,12 +9,13 @@ public class MovableObs : MonoBehaviour
 	public float speed = 3f;
 	public float offset = 0f; //If yo want to modify the position at the start 
 
-	private bool isForward = true; //If the movement is out
-	private Vector3 startPos;
+	private bool _isForward = true; //If the movement is out
+	private Vector3 _startPos;
    
     void Awake()
     {
-		startPos = transform.position;
+		//modifying the position on awake
+		_startPos = transform.position;
 		if (horizontal)
 			transform.position += Vector3.right * offset;
 		else
@@ -24,46 +25,46 @@ public class MovableObs : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (horizontal)
+		if (horizontal) //horzontal movement
 		{
-			if (isForward)
+			if (_isForward) //moving while moving forward
 			{
-				if (transform.position.x < startPos.x + distance)
+				if (transform.position.x < _startPos.x + distance)
 				{
 					transform.position += Vector3.right * Time.deltaTime * speed;
 				}
-				else
-					isForward = false;
+				else //switch to moving backwards
+					_isForward = false;
 			}
 			else
 			{
-				if (transform.position.x > startPos.x)
+				if (transform.position.x > _startPos.x) //moving while moving backwards
 				{
 					transform.position -= Vector3.right * Time.deltaTime * speed;
 				}
 				else
-					isForward = true;
+					_isForward = true; //switch to moving backwards
 			}
 		}
 		else
 		{
-			if (isForward)
+			if (_isForward) //moving  while moving forwards
 			{
-				if (transform.position.z < startPos.z + distance)
+				if (transform.position.z < _startPos.z + distance)
 				{
 					transform.position += Vector3.forward * Time.deltaTime * speed;
 				}
 				else
-					isForward = false;
+					_isForward = false; //switching to backwards
 			}
-			else
+			else //moving while moving backwards
 			{
-				if (transform.position.z > startPos.z)
+				if (transform.position.z > _startPos.z)
 				{
 					transform.position -= Vector3.forward * Time.deltaTime * speed;
 				}
 				else
-					isForward = true;
+					_isForward = true; //switching to forwards
 			}
 		}
     }

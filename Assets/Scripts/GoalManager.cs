@@ -5,20 +5,20 @@ using UnityEngine;
 public class GoalManager : MonoBehaviour
 {
 
-    private int nextGoal; //Number of the next Goal
+    private int _nextGoal; //Number of the next Goal
 
-    private bool onTheWayBack; //is he on the way back?
+    private bool _onTheWayBack; //is he on the way back?
 
-    private Countdown countdown; //script to update Checkpoints on UI
+    private Countdown _countdown; //script to update Checkpoints on UI
 
-    private int checkpointNumber;
+    private int _checkpointNumber;
 
     // Start is called before the first frame update
     void Start()
     {
-        countdown = GameObject.Find("Canvas").GetComponent<Countdown>(); //finds GoalManager Script
-        onTheWayBack = false;
-        checkpointNumber = 0;
+        _countdown = GameObject.Find("Canvas").GetComponent<Countdown>(); //finds GoalManager Script
+        _onTheWayBack = false; //at the beginning the player isnt on the way back
+        _checkpointNumber = 0; //sets the checkpoint to zero
         
     }
 
@@ -28,42 +28,44 @@ public class GoalManager : MonoBehaviour
         
     }
 
+    //checks of the right checkpoint is reached and deals with some cases
     public void checkGoal(int goalNumber)
     {
-        if(goalNumber == nextGoal)
+        if(goalNumber == _nextGoal) //if the right checkpoint is reached
         {
-            if(nextGoal == 5)
+            if(_nextGoal == 5) //if the end of the parkour is reached 
             {
-                nextGoal--;
-                onTheWayBack = true;
+                _nextGoal--; //next goal is behind
+                _onTheWayBack = true; //now on the way back
 
-                checkpointNumber++;
-                countdown.newCheckpoint(checkpointNumber);
+                _checkpointNumber++;
+                _countdown.newCheckpoint(_checkpointNumber);
 
-            }else if (nextGoal == 0)
+            }else if (_nextGoal == 0) //if the beginning of the parkour is reached
             {
-                nextGoal++;
-                onTheWayBack = false;
+                _nextGoal++;
+                _onTheWayBack = false; //not anymore on the way back
 
-                checkpointNumber = 0;
-                countdown.newCheckpoint(checkpointNumber);
+                _checkpointNumber = 0; //resets Checkpoints
+                _countdown.newCheckpoint(_checkpointNumber);
 
-                countdown.newTimer();
-            }else if (!onTheWayBack)
+                _countdown.newTimer(); // new timer with reduced time
+
+            }else if (!_onTheWayBack) //if the player isnt on the way back
             {
-                nextGoal++;
+                _nextGoal++;
 
-                checkpointNumber++;
-                countdown.newCheckpoint(checkpointNumber);
+                _checkpointNumber++;
+                _countdown.newCheckpoint(_checkpointNumber);
 
-            }else if (onTheWayBack)
+            }else if (_onTheWayBack) // if the player is on the way back
             {
-                nextGoal--;
+                _nextGoal--;
                 
-                checkpointNumber++;
-                countdown.newCheckpoint(checkpointNumber);
+                _checkpointNumber++;
+                _countdown.newCheckpoint(_checkpointNumber);
             }
-        }else 
+        }else //if the wrong checkpoint is reached
         {
             Debug.Log("Wrong Checkpoint!");
         }

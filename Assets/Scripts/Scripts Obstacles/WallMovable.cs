@@ -8,18 +8,18 @@ public class WallMovable : MonoBehaviour
 	public bool isRandom = true; //If you want that the wall go down random
 	public float speed = 2f;
 
-	private float height; //Height of the platform
-	private float posYDown; //Start position of the Y coord
-	private bool isWaiting = false; //If the wall is waiting up or down
-	private bool canChange = true; //If the wall is thinking if should go down or not
+	private float _height; //Height of the platform
+	private float _posYDown; //Start position of the Y coord
+	private bool _isWaiting = false; //If the wall is waiting up or down
+	private bool _canChange = true; //If the wall is thinking if should go down or not
 
 	void Awake()
     {
-		height = transform.localScale.y;
+		_height = transform.localScale.y;
 		if(isDown)
-			posYDown = transform.position.y;
+			_posYDown = transform.position.y;
 		else
-			posYDown = transform.position.y - height;
+			_posYDown = transform.position.y - _height;
 	}
 
     // Update is called once per frame
@@ -27,23 +27,23 @@ public class WallMovable : MonoBehaviour
     {
 		if (isDown)
 		{
-			if (transform.position.y < posYDown + height)
+			if (transform.position.y < _posYDown + _height)
 			{
 				transform.position += Vector3.up * Time.deltaTime * speed;
 			}
-			else if (!isWaiting)
+			else if (!_isWaiting)
 				StartCoroutine(WaitToChange(0.25f));
 		}
 		else
 		{
-			if (!canChange)
+			if (!_canChange)
 				return;
 
-			if (transform.position.y > posYDown)
+			if (transform.position.y > _posYDown)
 			{
 				transform.position -= Vector3.up * Time.deltaTime * speed;
 			}
-			else if (!isWaiting)
+			else if (!_isWaiting)
 				StartCoroutine(WaitToChange(0.25f));
 		}
 	}
@@ -51,9 +51,9 @@ public class WallMovable : MonoBehaviour
 	//Function that wait before go down or up
 	IEnumerator WaitToChange(float time)
 	{
-		isWaiting = true;
+		_isWaiting = true;
 		yield return new WaitForSeconds(time);
-		isWaiting = false;
+		_isWaiting = false;
 		isDown = !isDown;
 
 		if (isRandom && !isDown) //If is wall up and is random
@@ -68,13 +68,13 @@ public class WallMovable : MonoBehaviour
 	//Function that checks every 1.25secs if can go down the wall
 	IEnumerator Retry(float time)
 	{
-		canChange = false;
+		_canChange = false;
 		yield return new WaitForSeconds(time);
 		int num = Random.Range(0, 2);
-		//Debug.Log("2-"+num);
+
 		if (num == 1)
 			StartCoroutine(Retry(1.25f));
 		else
-			canChange = true;
+			_canChange = true;
 	}
 }

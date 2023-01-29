@@ -20,8 +20,8 @@ public class PlayerController : MonoBehaviour
     public bool isJumping;
     public float force;
     public float maxJumpHeight;
-    private float stop;
-    private float lastGrounded;
+    private float _stop;
+    private float _lastGrounded;
 
 
     public Rigidbody RB;
@@ -58,14 +58,14 @@ public class PlayerController : MonoBehaviour
         }
         
         //stop jumping, if player lets go of space or reaches the maxJumpheight
-        if (Input.GetKeyUp(KeyCode.Space) || stop < 0)
+        if (Input.GetKeyUp(KeyCode.Space) || _stop < 0)
         {
             isJumping = false;
         }
 
         //calculate "stop" based on player y position and maxJumpHeight
         //lastGrounded = y position the last time th player was grounded
-        stop = maxJumpHeight - this.gameObject.transform.position.y - lastGrounded;
+        _stop = maxJumpHeight - this.gameObject.transform.position.y - _lastGrounded;
     }
 
     //Jump Force
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
         {
             isOnGround = true;
             
-            lastGrounded = this.gameObject.transform.position.y; //re-calculate lastGrounded
+            _lastGrounded = this.gameObject.transform.position.y; //re-calculate lastGrounded
         }
 
     }

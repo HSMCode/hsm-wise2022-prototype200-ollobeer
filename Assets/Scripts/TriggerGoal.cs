@@ -7,13 +7,13 @@ public class TriggerGoal : MonoBehaviour
 
     public GameObject Ball;
 
-    private int thisGoal; //Number of the Goal
+    private int _thisGoal; //Number of the Goal
 
-    private GoalManager goalManager; //GoalManager Script
+    private GoalManager _goalManager; //GoalManager Script
 
     void Start() 
     {
-        goalManager = GameObject.Find("GoalManager").GetComponent<GoalManager>(); //finds GoalManager Script
+        _goalManager = GameObject.Find("GoalManager").GetComponent<GoalManager>(); //finds GoalManager Script
     }
 
     void Update() 
@@ -31,25 +31,25 @@ public class TriggerGoal : MonoBehaviour
             //gets the Number of the Goal
             if (this.gameObject.CompareTag("GoalStart"))
             {
-                thisGoal = 0;
+                _thisGoal = 0;
             }else if (this.gameObject.CompareTag("Goal1"))
             {
-                thisGoal = 1;
+                _thisGoal = 1;
             }else if (this.gameObject.CompareTag("Goal2"))
             {
-                thisGoal = 2;
+                _thisGoal = 2;
             }else if (this.gameObject.CompareTag("Goal3"))
             {  
-                thisGoal = 3;
+                _thisGoal = 3;
             }else if (this.gameObject.CompareTag("Goal4"))
             {
-                thisGoal = 4;
+                _thisGoal = 4;
             }else if (this.gameObject.CompareTag("Goal5"))
             {
-                thisGoal = 5;
+                _thisGoal = 5;
             }
 
-            goalManager.checkGoal(thisGoal); //sends the goalNumber to the GoalManager
+            _goalManager.checkGoal(_thisGoal); //sends the goalNumber to the GoalManager
         }
     }
 }
